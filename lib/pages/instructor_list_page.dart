@@ -4,10 +4,10 @@ import 'package:flutter_practice/widgets/expandable_item_card.dart';
 /// 課程模型
 class Course {
   final String id;
-  final String title;
+  final String name;
   final String time;
 
-  Course({required this.id, required this.title, required this.time});
+  Course({required this.id, required this.name, required this.time});
 }
 
 /// 講師模型，包含課程清單
@@ -35,8 +35,8 @@ final List<Instructor> mockInstructors = [
     title: 'Demonstrator',
     imgUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
     courses: [
-      Course(id: 'c1', title: '基礎程式設計', time: '每週二, 10:00–12:00'),
-      Course(id: 'c2', title: '人工智慧邏輯與實作', time: '每週四, 14:00–16:00'),
+      Course(id: 'c1', name: '基礎程式設計', time: '每週二, 10:00–12:00'),
+      Course(id: 'c2', name: '人工智慧邏輯與實作', time: '每週四, 14:00–16:00'),
     ],
   ),
   Instructor(
@@ -45,8 +45,8 @@ final List<Instructor> mockInstructors = [
     title: 'Lecturer',
     imgUrl: 'https://randomuser.me/api/portraits/men/2.jpg',
     courses: [
-      Course(id: 'c3', title: '資料庫系統概論', time: '每週一, 09:00–11:00'),
-      Course(id: 'c4', title: '網頁前端開發', time: '每週三, 13:00–15:00'),
+      Course(id: 'c3', name: '資料庫系統概論', time: '每週一, 09:00–11:00'),
+      Course(id: 'c4', name: '網頁前端開發', time: '每週三, 13:00–15:00'),
     ],
   ),
 ];
@@ -57,8 +57,8 @@ List<ExpandableTileModel> convertToItemModelList(List<Instructor> data) {
     final List<ExpandableTileModel> courseItems = instructor.courses.map((course) {
       return ExpandableTileModel(
         key: ValueKey(course.id),
-        title: course.title,
-        subtitle: course.time,
+        title: course.name,
+        text: course.time,
         leadingWidget: const Icon(Icons.calendar_today),
         trailingIcon: const Icon(Icons.chevron_right),
       );
@@ -66,8 +66,9 @@ List<ExpandableTileModel> convertToItemModelList(List<Instructor> data) {
 
     return ExpandableTileModel(
       key: ValueKey(instructor.id),
-      title: instructor.name,
-      subtitle: instructor.title,
+      title: instructor.title,
+      titleStyle: const TextStyle(color: Colors.grey),
+      text: instructor.name,
       leadingWidget: CircleAvatar(
         backgroundImage: NetworkImage(instructor.imgUrl),
       ),

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 /// 資料模型：用來描述每一個可展開項目的內容與樣式
 class ExpandableTileModel {
-  final String title; // 必填標題
-  final String? subtitle; // 副標題
-  final TextStyle? titleStyle; // 標題樣式
-  final TextStyle? subtitleStyle; // 副標題樣式
+  final String text; // 必填標題
+  final String? title; // 副標題
+  final TextStyle? textStyle; // 標題樣式
+  final TextStyle? titleStyle; // 副標題樣式
   final double? width; // 指定卡片寬度
   final double? height; // 指定卡片高度
   final EdgeInsetsGeometry? padding; // 外圍 padding
@@ -16,10 +16,10 @@ class ExpandableTileModel {
   final Key? key; // Flutter widget identity key
 
   ExpandableTileModel({
-    required this.title,
-    this.subtitle,
+    required this.text,
+    this.title,
+    this.textStyle,
     this.titleStyle,
-    this.subtitleStyle,
     this.width,
     this.height,
     this.padding,
@@ -114,14 +114,14 @@ class _ExpandableItemCardState extends State<ExpandableItemCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (item.subtitle != null)
+                    if (item.title != null)
                       Text(
-                        item.subtitle!,
-                        style: item.subtitleStyle ?? const TextStyle(color: Colors.grey),
+                        item.title!,
+                        style: item.titleStyle,
                       ),
                     Text(
-                      item.title,
-                      style: item.titleStyle ?? const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      item.text,
+                      style: item.textStyle,
                     ),
                   ],
                 ),
