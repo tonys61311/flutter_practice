@@ -13,9 +13,9 @@ class Note {
     this.isDeleted = false,
   });
 
-  Note copyWith({int? id, String? title, bool? isDeleted}) {
+  Note copyWith({required int id, String? title, bool? isDeleted}) {
     return Note(
-      id: id ?? this.id,
+      id: id,
       title: title ?? this.title,
       isDeleted: isDeleted ?? this.isDeleted,
     );
@@ -33,7 +33,7 @@ class Failure {
 /// - 軟刪除筆記 (softDelete)
 /// - 透過 Stream 模擬 watchAll 監聽資料變化 (每2秒更新一次)
 class FakeNoteDao {
-  List<Note> _notes = [
+  final List<Note> _notes = [
     Note(id: 1, title: 'Note 1'),
     Note(id: 2, title: 'Note 2'),
   ];
@@ -82,6 +82,9 @@ class FakeNoteDao {
   Future<void> softDelete(int id) async {
     await Future.delayed(Duration(seconds: 2)); // 模擬DB延遲
     final note = _notes.firstWhere((n) => n.id == id, orElse: () => throw Exception('Note not found')); // 找不到筆記則拋出異常
+    if (note.isDeleted) {
+      throw Exception('Note already deleted');
+    }
     note.isDeleted = true;
     _emitCurrentState();
   }
@@ -174,7 +177,7 @@ class NoteRepositoryProvider {
   // 假設這個是你的「網路檢查」邏輯
   Future<bool> _isConnected() async {
     await Future.delayed(Duration(milliseconds: 500)); // 模擬檢查網路
-    return DateTime.now().second % 2 == 0; // 偶數秒=有網路，奇數秒=沒網路 (隨機)
+    return true; // for demo
   }
 
   // 根據當前網路狀態切換使用的 repository
