@@ -150,7 +150,13 @@ class _ExpandableItemCardState extends State<ExpandableItemCard> {
       width: widget.itemModel.width,
       height: widget.itemModel.height,
       child: widget.wrapWithCard
-          ? Card(child: content)
+          ? Card(
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.black, width: 1),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: content
+      )
           : content,
     );
   }
