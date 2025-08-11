@@ -50,7 +50,6 @@ class FakeNoteDao {
   }
 
   Stream<List<Note>> watchAll() {
-    Timer.periodic(Duration(seconds: 2), (_) => _emitCurrentState());
     return _controller.stream;
   }
 
